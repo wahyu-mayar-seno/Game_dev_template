@@ -1,123 +1,188 @@
-#include <glad/glad.h> // harus duluan!
+#include <glad/glad.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include <GLFW/glfw3.h>
-#include <stdio.h>
 
 #include "gmath.h"
 #include "shader.h"
+#include "type.h"
 
-static void error_callback(int error, const char *description) {
-  fprintf(stderr, "GLFW Error %d: %s\n", error, description);
+typedef struct {
+  f32 x, y, z;
+  f32 r, g, b;
+  f32 u, v;
+} Vertex;
+typedef struct {
+  Vertex *vertices;
+  u32 *indices;
+  i32 vert_size;
+  i32 vert_cap;
+  i32 indic_size;
+  i32 indic_cap;
+} Mesh;
+i32 MeshInit(Mesh *m, i32 vcap, i32 icap) {
+  if (m == NULL || vcap < 1 || icap < 1) {
+    printf("failed init mesh\n");
+    return -1;
+  }
+  m->vertices = malloc(sizeof(Vertex) * vcap);
+  if (!m->vertices) {
+    memset(m, 0, sizeof(Mesh));
+    printf("error alocate vertices\n");
+    return -1;
+  }
+  m->indices = malloc(sizeof(u32) * icap);
+  if (!m->indices) {
+    free(m->vertices);
+    memset(m, 0, sizeof(Mesh));
+    printf("error alocate indices\n");
+    return -1;
+  }
+  m->indic_cap = icap;
+  m->vert_cap = vcap;
+  m->indic_size = 0;
+  m->vert_size = 0;
+  return 0;
+}
+void MeshDelete(Mesh *m) {
+  if (m == NULL || m->vertices == NULL || m->indices == NULL) {
+    return;
+  }
+  free(m->vertices);
+  free(m->indices);
+  memset(m, 0, sizeof(Mesh));
+}
+typedef struct {
+  f32 x, y, w, h;
+} Rect;
+int pushRect(Mesh *m) { return 0; }
+// Callback: ubah viewport saat window di-resize
+int window_w = 300;
+int window_h = 600;
+
+void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+  window_w = width;
+  window_h = height;
+  glViewport(0, 0, width, height);
 }
 
+// Fungsi input sederhana
+void processInput(GLFWwindow *window) {
+  if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    glfwSetWindowShouldClose(window, 1);
+}
 int main(void) {
-  glfwSetErrorCallback(error_callback);
+  // 1. Inisialisasi GLFW
   if (!glfwInit()) {
-    fprintf(stderr, "Failed to initialize GLFW\n");
+    fprintf(stderr, "GLFW init failed!\n");
     return -1;
   }
 
+  // Tentukan versi OpenGL dan profil
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  GLFWwindow *window = glfwCreateWindow(1200, 600, "GLAD + GLFW", NULL, NULL);
+  // 2. Buat window
+  GLFWwindow *window =
+      glfwCreateWindow(window_w, window_h, "GLFW + GLAD (C)", NULL, NULL);
   if (!window) {
-    fprintf(stderr, "Failed to create window\n");
+    fprintf(stderr, "Failed to create GLFW window!\n");
     glfwTerminate();
     return -1;
   }
 
   glfwMakeContextCurrent(window);
+  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-  //  load OpenGL function pointers via GLAD
+  // 3. Load GLAD
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    fprintf(stderr, "Failed to initialize GLAD\n");
+    fprintf(stderr, "Failed to initialize GLAD!\n");
+    glfwDestroyWindow(window);
     glfwTerminate();
     return -1;
   }
+  Shader shader;
+  if (LoadShaderFromFile(&shader, "assets/shader/shader.vs",
 
-  printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
+                         "assets/shader/shader.fs")) {
+    goto cleanup;
+  }
 
-  float vertices[] = {
-      // positions        // colors
-      -300.0f, 300.0f,  0.0f, 1.0f, 0.0f, 0.0f, // red
-      300.0f,  300.0f,  0.0f, 0.0f, 1.0f, 0.0f, // green
-      300.0f,  -300.0f, 0.0f, 0.0f, 0.0f, 1.0f, // blue
-      -300.0f, -300.0f, 0.0f, 0.0f, 1.0f, 1.0f, // white
-
+  f32 vertices[] = {
+      0,   0,   0, 1, 1, 1, //
+      100, 0,   0, 0, 0, 1, //
+      100, 100, 0, 0, 1, 0, //
+      0,   100, 0, 1, 0, 0, //
   };
   u32 indices[] = {
       0, 1, 2, //
-      0, 2, 3, //
+      0, 2, 3  //
   };
-
-  GLuint vao, vbo, ebo;
+  u32 vao, vbo, ebo;
   glGenVertexArrays(1, &vao);
   glGenBuffers(1, &vbo);
   glGenBuffers(1, &ebo);
 
   glBindVertexArray(vao);
-  // upload vertex attribut
+
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-  // upload ebo data
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
                GL_STATIC_DRAW);
-
-  // posisi
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(f32) * 6, 0);
   glEnableVertexAttribArray(0);
-
-  // warna
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float),
-                        (void *)(3 * sizeof(float)));
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(f32) * 6,
+                        (void *)(sizeof(f32) * 3));
   glEnableVertexAttribArray(1);
+
   glBindVertexArray(0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+  // 4. Viewport awal
+  glViewport(0, 0, window_w, window_h);
 
-  // perbaikan clear color: harus dalam range 0.0 - 1.0
-  Shader shader;
-  if (LoadShaderFromFile(&shader, "./assets/shader/shader.vs",
-                         "./assets/shader/shader.fs")) {
-    printf("error load shader\n");
+  // 5. Loop utama
+  glClearColor(1.f, 0.2f, 1.f, 1.0f);
+  f32 proj[16];
+  mat4_ortho(proj, 0, 300, 300, 0, 0, -1);
+  int uprojloc = glGetUniformLocation(shader.programId, "uProj");
 
-    //  jika shader gagal load, hapus resource VAO dan VBO
-    glDeleteVertexArrays(1, &vao); // bersihkan VAO
-    glDeleteBuffers(1, &vbo);      // bersihkan VBO
-
-    glfwDestroyWindow(window); // bersihkan window
-    glfwTerminate();           // terminate GLFW
-    return -1;
-  }
-  f32 orto[16];
-  mat4_ortho(orto, 0.f, 1200.f, 600.f, 0.f, -1.f, 1.f);
-  i32 loc = glGetUniformLocation(shader.programId, "uProj");
-
-  glClearColor(0, 0, 0, 1);
   while (!glfwWindowShouldClose(window)) {
+    processInput(window);
+    // Clear layar dengan warna biru tua
+
+    mat4_ortho(proj, 0, window_w, window_h, 0, 0, -1);
     glClear(GL_COLOR_BUFFER_BIT);
-    glUseProgram(shader.programId);
-    glUniformMatrix4fv(loc, 1, GL_FALSE, (const GLfloat *)orto);
+
+    UseShader(&shader);
+    glUniformMatrix4fv(uprojloc, 1, GL_FALSE, proj);
     glBindVertexArray(vao);
-    // glDrawArrays(GL_TRIANGLES, 0, 3);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
 
-  //  bersihkan shader
-  UnloadShader(&shader);
-
-  //  bersihkan VAO dan VBO
-  glDeleteVertexArrays(1, &vao); // hapus VAO
-  glDeleteBuffers(1, &vbo);      // hapus VBO
-
-  //  bersihkan window dan terminate GLFW
+  // 6. Bersihkan
+  glDeleteBuffers(1, &ebo);
+  glDeleteBuffers(1, &vbo);
+  glDeleteVertexArrays(1, &vao);
   glfwDestroyWindow(window);
   glfwTerminate();
-
   return 0;
+  // cleanup main
+  glDeleteBuffers(1, &ebo);
+  glDeleteBuffers(1, &vbo);
+  glDeleteVertexArrays(1, &vao);
+  UnloadShader(&shader);
+cleanup:
+  glfwDestroyWindow(window);
+  glfwTerminate();
+  return -1;
 }

@@ -10,7 +10,9 @@ add_library(shader src/shader.c)
 add_library(file src/file.c)
 add_library(math src/gmath.c)
 
-set(MY_LIBS glad glfw miniaudio shader file math)
+set(MY_LIBS glad glfw miniaudio shader file math )
 
 add_executable(mgui src/main.c)
 target_link_libraries(mgui PRIVATE ${MY_LIBS})
+
+add_executable(defer src/defer.c)

@@ -1,10 +1,9 @@
 #!/bin/bash
 set -xe
 pwd
-cp -r ./assets ./build/
+cp -ru ./assets ./build/
 cd build
 cmake .. -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld"
 ninja
-./mgui
 cd ..
 
