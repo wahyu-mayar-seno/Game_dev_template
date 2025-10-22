@@ -1,4 +1,4 @@
-#include "gmath.h"
+#include "math_linear_algebra.h"
 void mat4_ortho(float out[16], float left, float right, float bottom, float top,
                 float nearZ, float farZ) {
   float rl = right - left;

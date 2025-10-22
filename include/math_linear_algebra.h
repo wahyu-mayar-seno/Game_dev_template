@@ -1,5 +1,5 @@
-#ifndef GMATH_H
-#define GMATH_H
+#ifndef MATH_LINEAR_ALGEBRA_H
+#define MATH_LINEAR_ALGEBRA_H
 typedef struct {
   float m[16];
 } mat4x4;
