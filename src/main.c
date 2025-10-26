@@ -194,6 +194,7 @@ int main(void) {
 
   // 5. Main Loop
   while (!glfwWindowShouldClose(window)) {
+
     processInput(window);
     // Clear layar dengan warna biru tua
 
