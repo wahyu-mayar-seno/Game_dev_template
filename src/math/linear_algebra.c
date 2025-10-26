@@ -1,9 +1,10 @@
-#include "math_linear_algebra.h"
-void mat4_ortho(float out[16], float left, float right, float bottom, float top,
-                float nearZ, float farZ) {
-  float rl = right - left;
-  float tb = top - bottom;
-  float fn = farZ - nearZ;
+#include "math/linear_algebra.h"
+
+void mat4_ortho(f32 out[16], f32 left, f32 right, f32 bottom, f32 top,
+                f32 nearZ, f32 farZ) {
+  f32 rl = right - left;
+  f32 tb = top - bottom;
+  f32 fn = farZ - nearZ;
 
   out[0] = 2.0f / rl;
   out[1] = 0.0f;

@@ -1,5 +1,8 @@
 #ifndef DEFER_H
 #define DEFER_H
+
+#include "type.h"
+
 typedef void (*fn)(void *);
 typedef struct {
   fn func;
@@ -8,11 +11,11 @@ typedef struct {
 
 typedef struct {
   defer_task *tasks;
-  int cap;
-  int size;
+  i32 cap;
+  i32 size;
 } defer_holder;
 
-// push task into table if there's a slot
+// push task i32o table if there's a slot
 void push_task(defer_holder *dh, fn func, void *data);
 // remove task in the last slot( basicaly just size-=1)
 void pop_task(defer_holder *dh);

@@ -1,21 +1,23 @@
-#include <glad/glad.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include <glad/glad.h>
+
 #include <GLFW/glfw3.h>
 
+#include "math/linear_algebra.h"
+
+#include "gllayer/shader.h"
+
 #include "defer.h"
-#include "math_linear_algebra.h"
-#include "shader.h"
 #include "type.h"
 
 typedef struct {
   f32 x, y, z;
   f32 r, g, b;
-  f32 u, v;
 } Vertex;
+
 typedef struct {
   Vertex *vertices;
   u32 *indices;
@@ -24,6 +26,7 @@ typedef struct {
   i32 indic_size;
   i32 indic_cap;
 } Mesh;
+
 i32 MeshInit(Mesh *m, i32 vcap, i32 icap) {
   if (m == NULL || vcap < 1 || icap < 1) {
     printf("failed init mesh\n");
@@ -48,6 +51,7 @@ i32 MeshInit(Mesh *m, i32 vcap, i32 icap) {
   m->vert_size = 0;
   return 0;
 }
+
 void MeshDelete(Mesh *m) {
   if (m == NULL || m->vertices == NULL || m->indices == NULL) {
     return;
@@ -59,12 +63,15 @@ void MeshDelete(Mesh *m) {
 typedef struct {
   f32 x, y, w, h;
 } Rect;
-int pushRect(Mesh *m) { return 0; }
+typedef struct {
+  f32 r, g, b;
+} ColorRGB;
+i32 pushRect(Mesh *m, Rect r, ColorRGB c) { return 0; }
 
 // window re-size callback
-int window_w = 300;
-int window_h = 600;
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+i32 window_w = 800;
+i32 window_h = 600;
+void framebuffer_size_callback(GLFWwindow *window, i32 width, i32 height) {
   window_w = width;
   window_h = height;
   glViewport(0, 0, width, height);
@@ -102,7 +109,7 @@ void defer_glDeleteVertexArrays(void *data) {
 // end of defer_wrapper;
 
 // main
-int main(void) {
+i32 main(void) {
   defer_task dtask[10];
   memset(dtask, 0, sizeof(dtask));
   defer_holder dtable = {.tasks = dtask, .cap = 10, .size = 0};
@@ -190,7 +197,7 @@ int main(void) {
 
   f32 proj[16];
   mat4_ortho(proj, 0, 300, 300, 0, 0, -1);
-  int uprojloc = glGetUniformLocation(shader.programId, "uProj");
+  i32 uprojloc = glGetUniformLocation(shader.programId, "uProj");
 
   // 5. Main Loop
   while (!glfwWindowShouldClose(window)) {

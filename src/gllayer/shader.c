@@ -1,9 +1,11 @@
-#include <glad/glad.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <glad/glad.h>
+
+#include "gllayer/shader.h"
+
 #include "file.h"
-#include "shader.h"
 #include "type.h"
 
 i32 LoadShaderFromFile(Shader *shader, const char *vertPath,

@@ -1,9 +1,10 @@
 #ifndef SHADER_H
 #define SHADER_H
 
+#include <glad/glad.h>
+
 #include "type.h"
 
-#include <glad/glad.h>
 typedef struct {
   GLuint programId;
 } Shader;
