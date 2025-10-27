@@ -1,4 +1,4 @@
 # Code Convention
 
-| Code Element | Convention | Example |
-| struct | PascalCase | BatchBuffe |
+ Code Element | Convention | Example 
+ struct | PascalCase | BatchBuffe 
