@@ -13,61 +13,6 @@
 #include "defer.h"
 #include "type.h"
 
-typedef struct {
-  f32 x, y, z;
-  f32 r, g, b;
-} Vertex;
-
-typedef struct {
-  Vertex *vertices;
-  u32 *indices;
-  i32 vert_size;
-  i32 vert_cap;
-  i32 indic_size;
-  i32 indic_cap;
-} Mesh;
-
-i32 MeshInit(Mesh *m, i32 vcap, i32 icap) {
-  if (m == NULL || vcap < 1 || icap < 1) {
-    printf("failed init mesh\n");
-    return -1;
-  }
-  m->vertices = malloc(sizeof(Vertex) * vcap);
-  if (!m->vertices) {
-    memset(m, 0, sizeof(Mesh));
-    printf("error alocate vertices\n");
-    return -1;
-  }
-  m->indices = malloc(sizeof(u32) * icap);
-  if (!m->indices) {
-    free(m->vertices);
-    memset(m, 0, sizeof(Mesh));
-    printf("error alocate indices\n");
-    return -1;
-  }
-  m->indic_cap = icap;
-  m->vert_cap = vcap;
-  m->indic_size = 0;
-  m->vert_size = 0;
-  return 0;
-}
-
-void MeshDelete(Mesh *m) {
-  if (m == NULL || m->vertices == NULL || m->indices == NULL) {
-    return;
-  }
-  free(m->vertices);
-  free(m->indices);
-  memset(m, 0, sizeof(Mesh));
-}
-typedef struct {
-  f32 x, y, w, h;
-} Rect;
-typedef struct {
-  f32 r, g, b;
-} ColorRGB;
-i32 pushRect(Mesh *m, Rect r, ColorRGB c) { return 0; }
-
 // window re-size callback
 i32 window_w = 800;
 i32 window_h = 600;
@@ -107,12 +52,27 @@ void defer_glDeleteVertexArrays(void *data) {
   glDeleteVertexArrays(1, (u32 *)data);
 }
 // end of defer_wrapper;
-
+int power(int base, int exp) {
+  if (exp < 1) {
+    return 1;
+  }
+  if (exp < 2) {
+    return base;
+  }
+  int res = base;
+  for (int i = 1; i < exp; i++) {
+    res = res * base;
+  }
+  return res;
+}
 // main
 i32 main(void) {
   defer_task dtask[10];
   memset(dtask, 0, sizeof(dtask));
   defer_holder dtable = {.tasks = dtask, .cap = 10, .size = 0};
+  for (int i = 0; i <= 28; i++) {
+    printf("2^%d=%d\n", i, power(2, i));
+  }
 
   // 1. Initializing GLFW
   if (!glfwInit()) {
