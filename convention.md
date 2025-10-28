@@ -44,9 +44,9 @@ __Code Element__ | __Convention__ | __Example__
 #define PLATFORM_DESKTOP
 
 typedef struct Texture2D {
-    U32 id;
-    I32 width;
-    I32 height;
+    u32 id;
+    i32 width;
+    i32 height;
 } Texture2D;
 
 typedef enum TextureFormat {
@@ -54,16 +54,16 @@ typedef enum TextureFormat {
     PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
 } TextureFormat;
 
-B32 LoadTexture(Texture2D *tex, const char *path);
-Void UnloadTexture(Texture2D *Tex);
+i32 LoadTexture(Texture2D *tex, const char *path);
+void UnloadTexture(Texture2D *Tex);
 
-static I32 screenWidth = 1280;
-static I32 screenHeight = 720;
-static F32 frameTime = 0.0f;
+static i32 screenWidth = 1280;
+static i32 screenHeight = 720;
+static f32 frameTime = 0.0f;
 
-Void InitWindow(I32 width, I32 height, const Char *title);
-Void CloseWindow(Void);
-//alway use curly bracket for if,else if,else,for,while
+void InitWindow(I32 width, I32 height, const Char *title);
+void CloseWindow(void);
+//alway use curly bracket for : if,else if,else,for,while
 if(...){
     ...
 }else if(...){
