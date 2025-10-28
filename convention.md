@@ -30,7 +30,7 @@ __Code Element__ | __Convention__ | __Example__
 1. **No snake_case** (except for external API compatibility).  
 2. **PascalCase** is used for *types*, *interfaces*, and *public functions*.  
 3. **camelCase** is used for *variables* and *members*.  
-4. **Macro names**,**Preprocesor**, and **enum constants** are always **ALL_CAPS**.  
+4. **Macro names**,**Preprocesor**, and **enum members** are always **ALL_CAPS**.  
 5. **Float literals** always use `f` suffix (`10.0f`) for clarity and type safety.  
 6. **Symmetry rule**: any alloc/init/load/open function must have its cleanup pair.
 7. **Indentation** alway use 2 space instead of tabs
