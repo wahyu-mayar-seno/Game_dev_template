@@ -1,2 +1,0 @@
-artinya di C ada 
-variable,tipe primitvie,user defined typed(struct,enum,union),func,control flow udah cuman itu saja?
