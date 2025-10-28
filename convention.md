@@ -1,5 +1,7 @@
 # Code Convention
 
+### Naming
+
 __Code Element__ | __Convention__ | __Example__
 :---| :---: | :---
 **Macros** | `ALL_CAPS` | `#define MIN(a,b) (((a)<(b))?(a):(b))`
@@ -52,19 +54,19 @@ typedef enum TextureFormat {
     PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
 } TextureFormat;
 
-B32 LoadTexture(Texture2D *tex, const char *Path);
+B32 LoadTexture(Texture2D *tex, const char *path);
 Void UnloadTexture(Texture2D *Tex);
 
 static I32 screenWidth = 1280;
 static I32 screenHeight = 720;
 static F32 frameTime = 0.0f;
 
-Void InitWindow(I32 Width, I32 Height, const Char *Title);
+Void InitWindow(I32 width, I32 height, const Char *title);
 Void CloseWindow(Void);
 //alway use curly bracket for if,else if,else,for,while
 if(...){
     ...
-}else if{
+}else if(...){
    ...
 }else{
    ...
@@ -77,3 +79,4 @@ while(...){
     ...
 }
 
+```
