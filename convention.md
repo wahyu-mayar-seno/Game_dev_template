@@ -6,18 +6,18 @@ __Code Element__ | __Convention__ | __Example__
 :---| :---: | :---
 **Macros** | `ALL_CAPS` | `#define MIN(a,b) (((a)<(b))?(a):(b))`
 **Defines / Config Flags** | `ALL_CAPS` | `#define PLATFORM_DESKTOP`
-**Constants** | `camelCase` | `const int maxValue = 8;`
 **Struct** | `PascalCase` | `struct Texture2D`
 **Struct Members** | `camelCase` | `texture.texId`
 **Enum** | `PascalCase` | `TextureFormat`
 **Enum Members** | `ALL_CAPS` | `PIXELFORMAT_UNCOMPRESSED_R8G8B8`
 **Functions** | `PascalCase` | `InitWindow()`
+**Constants** | `camelCase` | `const int maxValue = 8;`
 **Variables** | `camelCase` | `screenWidth`
 **Local Variables** | `camelCase` | `playerPosition`
 **Global Variables** | `camelCase` | `fullScreen`
-**Pointers** | `MyType *pointer`  | `Texture2D *array;`
+**Pointers** | `Type *pointer`  | `Texture2D *array;`
 **Float Values** | Always include `.0f` | `float value = 10.0f;`
-**File Names** | `PascalCase` | `RenderSystem.c`, `Audio_Mixer.h`
+**File Names** | `snake_case` | `render_system.c`, `audio_mixer.h`
 **Header Guards** | `ALL_CAPS_WITH_UNDERSCORE` | `#ifndef TEXTURE_H`
 **Boolean Prefixes** | Optional `Is`, `Has`, `Can` | `IsVisible`, `HasShadow`, `CanMove`
 **Resource Lifecycle Functions** | Symmetric Pair | `Create/Delete`, `Load/Unload`, `Init/Uninit`, `Open/Close`
