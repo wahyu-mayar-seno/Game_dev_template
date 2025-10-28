@@ -15,7 +15,7 @@ __Code Element__ | __Convention__ | __Example__
 **Global Variables** | `camelCase` | `fullScreen`
 **Pointers** | `MyType *pointer`  | `Texture2D *array;`
 **Float Values** | Always include `.0f` | `float value = 10.0f;`
-**File Names** | `PascalCase` (optional underscore) | `RenderSystem.c`, `Audio_Mixer.h`
+**File Names** | `PascalCase` | `RenderSystem.c`, `Audio_Mixer.h`
 **Header Guards** | `ALL_CAPS_WITH_UNDERSCORE` | `#ifndef TEXTURE_H`
 **Boolean Prefixes** | Optional `Is`, `Has`, `Can` | `IsVisible`, `HasShadow`, `CanMove`
 **Resource Lifecycle Functions** | Symmetric Pair | `Create/Delete`, `Load/Unload`, `Init/Uninit`, `Open/Close`
