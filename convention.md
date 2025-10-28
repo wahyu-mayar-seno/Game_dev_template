@@ -1,7 +1,7 @@
 # Code Convention
 
 Code Element | Convention | Example
-:---:| :---: | :---:
+:---| :---: | :---
 **Macros** | `ALL_CAPS` | `#define MIN(a,b) (((a)<(b))?(a):(b))`
 **Defines / Config Flags** | `ALL_CAPS` | `#define PLATFORM_DESKTOP`
 **Constants** | `camelCase` | `const int maxValue = 8;`
