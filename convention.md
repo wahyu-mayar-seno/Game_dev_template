@@ -1,36 +1,40 @@
 # Code Convention
 
+# 🧭 C Code Convention – PascalCase Only
+
 ## 📘 Naming Overview
 
 | Code Element | Convention | Example |
 |:-------------:|:-----------:|:--------|
 | **Interface (API / System / Manager)** | `PascalCase` | `RenderSystem`, `AudioManager`, `EntityServer` |
 | **Type (struct / union / enum / typedef)** | `PascalCase` | `Texture`, `ShaderProgram`, `LevelData` |
-| **Function** | `PascalCase` *(use clear lifecycle pairs)* | `LoadTexture() / UnloadTexture()`, `CreateEntity() / DeleteEntity()` |
-| **Variable (local / member)** | `snake_case` | `vertex_count`, `temp_buffer` |
-| **Global Variable** | `g_snake_case` | `g_frame_time` |
-| **Static Variable (file scope)** | `s_snake_case` | `s_free_list` |
+| **Function** | `PascalCase` | `LoadTexture()`, `UpdateCamera()`, `CreateEntity()` |
+| **Variable (local / global / static)** | `PascalCase` | `FrameCount`, `TempBuffer`, `EntityList` |
+| **Constant (const)** | `PascalCase` or `kPascalCase` | `Gravity`, `kEpsilon` |
 | **Macro / Config Flag** | `ALL_CAPS` | `ENABLE_LOGGING`, `ARRAY_COUNT(x)` |
-| **Constant (const)** | `kPascalCase` | `const f32 kGravity = 9.8f;` |
-| **File Name** | `snake_case` | `render_system.c`, `audio_mixer.h` |
+| **Enum Name** | `PascalCase` | `RenderMode`, `AppState` |
+| **Enum Member** | `ALL_CAPS` | `RENDER_MODE_2D`, `APP_STATE_RUNNING` |
+| **File Name** | `PascalCase` (optional `_` between words) | `RenderSystem.c`, `AudioMixer.h` |
 | **Include Guard** | `ALL_CAPS_WITH_UNDERSCORE` | `#ifndef AUDIO_MANAGER_H` |
 
 ---
 
 ## 🔄 Resource Lifecycle Convention
 
-Always define **symmetric pairs** of functions for resources that require allocation and deallocation.
+Each resource that performs allocation or initialization **must have a clear symmetric pair**.
 
-| Lifecycle Purpose | Function Pair | Example |
-|:------------------:|:--------------:|:--------|
-| **Memory-allocated resource** | `Create*()` / `Delete*()` | `CreateEntity()`, `DeleteEntity()` |
-| **External data (file / asset)** | `Load*()` / `Unload*()` | `LoadTexture()`, `UnloadTexture()` |
-| **Subsystem / runtime context** | `Init*()` / `Uninit*()` | `InitAudioSystem()`, `UninitAudioSystem()` |
-| **Session or handle-based resource** | `Open*()` / `Close*()` | `OpenFileStream()`, `CloseFileStream()` |
+| Purpose | Function Pair | Example |
+|:--------:|:---------------:|:--------|
+| **Heap / GPU Allocation** | `Create*()` / `Delete*()` | `CreateEntity()`, `DeleteEntity()` |
+| **External Data (File / Asset)** | `Load*()` / `Unload*()` | `LoadTexture()`, `UnloadTexture()` |
+| **Subsystem / Context Initialization** | `Init*()` / `Uninit*()` | `InitAudioSystem()`, `UninitAudioSystem()` |
+| **Session / Handle Resource** | `Open*()` / `Close*()` | `OpenFileStream()`, `CloseFileStream()` |
 
-> ✅ **Rule of symmetry:**  
-> Every `LoadSomething()` must have a matching `UnloadSomething()`.  
-> Every `CreateSomething()` must have a matching `DeleteSomething()`.
+> ✅ **Symmetry Rule:**  
+> Every `Create` must have `Delete`.  
+> Every `Load` must have `Unload`.  
+> Every `Init` must have `Uninit`.  
+> Every `Open` must have `Close`.
 
 ---
 
@@ -39,8 +43,8 @@ Always define **symmetric pairs** of functions for resources that require alloca
 | Type | Prefix / Suffix | Example |
 |------|------------------|---------|
 | `struct` | none | `struct Texture` |
-| `typedef struct` | optional `_t` suffix | `typedef struct Texture Texture_t;` |
-| `enum` | none | `enum RenderMode { RENDERMODE_2D, RENDERMODE_3D };` |
+| `typedef struct` | optional `_t` | `typedef struct Texture Texture_t;` |
+| `enum` | none | `enum RenderMode { RENDER_MODE_2D, RENDER_MODE_3D };` |
 | `function pointer` | `_Fn` suffix | `typedef void (*UpdateFn)(Entity*);` |
 
 ---
@@ -53,11 +57,12 @@ Always define **symmetric pairs** of functions for resources that require alloca
 #define TEXTURE_H
 
 typedef struct Texture {
-    u32 id;
-    i32 width, height;
+    U32 Id;
+    I32 Width;
+    I32 Height;
 } Texture;
 
-b32 LoadTexture(Texture *tex, const char *path);
-void UnloadTexture(Texture *tex);
+B32 LoadTexture(Texture *Tex, const char *Path);
+Void UnloadTexture(Texture *Tex);
 
 #endif // TEXTURE_H
