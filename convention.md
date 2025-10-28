@@ -1,6 +1,6 @@
 # Code Convention
 
-Code Element | Convention | Example
+__Code Element__ | __Convention__ | __Example__
 :---| :---: | :---
 **Macros** | `ALL_CAPS` | `#define MIN(a,b) (((a)<(b))?(a):(b))`
 **Defines / Config Flags** | `ALL_CAPS` | `#define PLATFORM_DESKTOP`
