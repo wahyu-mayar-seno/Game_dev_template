@@ -28,11 +28,10 @@ __Code Element__ | __Convention__ | __Example__
 1. **No snake_case** (except for external API compatibility).  
 2. **PascalCase** is used for *types*, *interfaces*, and *public functions*.  
 3. **camelCase** is used for *variables* and *members*.  
-4. **Macro names** and **enum constants** are always **ALL_CAPS**.  
+4. **Macro names**,**Preprocesor**, and **enum constants** are always **ALL_CAPS**.  
 5. **Float literals** always use `f` suffix (`10.0f`) for clarity and type safety.  
-6. **Pointers** always place `*` next to the variable, not the type (`Type *ptr`, not `Type* ptr`).  
-7. **Symmetry rule**: any alloc/init/load/open function must have its cleanup pair.
-8. **Indentation** alway use 2 space instead of tabs
+6. **Symmetry rule**: any alloc/init/load/open function must have its cleanup pair.
+7. **Indentation** alway use 2 space instead of tabs
 
 ---
 
@@ -43,9 +42,9 @@ __Code Element__ | __Convention__ | __Example__
 #define PLATFORM_DESKTOP
 
 typedef struct Texture2D {
-    U32 Id;
-    I32 Width;
-    I32 Height;
+    U32 id;
+    I32 width;
+    I32 height;
 } Texture2D;
 
 typedef enum TextureFormat {
@@ -53,7 +52,7 @@ typedef enum TextureFormat {
     PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
 } TextureFormat;
 
-B32 LoadTexture(Texture2D *Tex, const char *Path);
+B32 LoadTexture(Texture2D *tex, const char *Path);
 Void UnloadTexture(Texture2D *Tex);
 
 static I32 screenWidth = 1280;
@@ -62,3 +61,19 @@ static F32 frameTime = 0.0f;
 
 Void InitWindow(I32 Width, I32 Height, const Char *Title);
 Void CloseWindow(Void);
+//alway use curly bracket for if,else if,else,for,while
+if(...){
+    ...
+}else if{
+   ...
+}else{
+   ...
+}
+
+for(...){
+    ...
+}
+while(...){
+    ...
+}
+
