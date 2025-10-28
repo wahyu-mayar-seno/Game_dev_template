@@ -20,7 +20,6 @@ __Code Element__ | __Convention__ | __Example__
 **Boolean Prefixes** | Optional `Is`, `Has`, `Can` | `IsVisible`, `HasShadow`, `CanMove`
 **Resource Lifecycle Functions** | Symmetric Pair | `Create/Delete`, `Load/Unload`, `Init/Uninit`, `Open/Close`
 **Function Pointer Typedefs** | PascalCase + `Fn` suffix | `typedef void (*UpdateFn)(Entity *E);`
-**File Name** | snake_case | `io_file.c`
 
 ---
 
