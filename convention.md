@@ -6,20 +6,21 @@ __Code Element__ | __Convention__ | __Example__
 **Defines / Config Flags** | `ALL_CAPS` | `#define PLATFORM_DESKTOP`
 **Constants** | `camelCase` | `const int maxValue = 8;`
 **Struct** | `PascalCase` | `struct Texture2D`
-**Struct Members** | `camelCase` | `texture.id`
+**Struct Members** | `camelCase` | `texture.texId`
 **Enum** | `PascalCase` | `TextureFormat`
 **Enum Members** | `ALL_CAPS` | `PIXELFORMAT_UNCOMPRESSED_R8G8B8`
-**Functions** | `PascalCase` or `PrefixPascalCase` | `InitWindow()`, `RlLoadTexture()`
+**Functions** | `PascalCase` | `InitWindow()`
 **Variables** | `camelCase` | `screenWidth`
 **Local Variables** | `camelCase` | `playerPosition`
-**Global Variables** | `camelCase` | `fullscreen`
-**Pointers** | `MyType *pointer` (space before `*`) | `Texture2D *array;`
+**Global Variables** | `camelCase` | `fullScreen`
+**Pointers** | `MyType *pointer`  | `Texture2D *array;`
 **Float Values** | Always include `.0f` | `float value = 10.0f;`
 **File Names** | `PascalCase` (optional underscore) | `RenderSystem.c`, `Audio_Mixer.h`
 **Header Guards** | `ALL_CAPS_WITH_UNDERSCORE` | `#ifndef TEXTURE_H`
 **Boolean Prefixes** | Optional `Is`, `Has`, `Can` | `IsVisible`, `HasShadow`, `CanMove`
 **Resource Lifecycle Functions** | Symmetric Pair | `Create/Delete`, `Load/Unload`, `Init/Uninit`, `Open/Close`
 **Function Pointer Typedefs** | PascalCase + `Fn` suffix | `typedef void (*UpdateFn)(Entity *E);`
+**File Name** | snake_case | `io_file.c`
 
 ---
 
@@ -32,6 +33,7 @@ __Code Element__ | __Convention__ | __Example__
 5. **Float literals** always use `f` suffix (`10.0f`) for clarity and type safety.  
 6. **Pointers** always place `*` next to the variable, not the type (`Type *ptr`, not `Type* ptr`).  
 7. **Symmetry rule**: any alloc/init/load/open function must have its cleanup pair.
+8. **Indentation** alway use 2 space instead of tabs
 
 ---
 

@@ -1,15 +1,2 @@
-buat tabel markdown ikuti ini
-Code element | Convention | Example
-Macros 	ALL_CAPS 	#define MIN(a,b) (((a)<(b))?(a):(b))
-Defines 	ALL_CAPS 	#define PLATFORM_DESKTOP
-Constants 	camelCase 	const int maxValue = 8
-Struct 	PascalCase 	struct Texture2D
-Struct members 	camelCase 	texture.id
-Enum 	PascalCase 	TextureFormat
-Enum members 	ALL_CAPS 	PIXELFORMAT_UNCOMPRESSED_R8G8B8
-Functions 	PascalCase or prefixPascalCase 	InitWindow()/rlLoadTexture()
-Variables 	camelCase 	screenWidth
-Local variables 	camelCase 	playerPosition
-Global variables 	camelCase 	fullscreen
-Pointers 	MyType *pointer 	Texture2D *array;
-float values 	always x.xf 	float value = 10.0f
+artinya di C ada 
+variable,tipe primitvie,user defined typed(struct,enum,union),func,control flow udah cuman itu saja?
