@@ -1,25 +1,25 @@
 #ifndef DEFER_H
 #define DEFER_H
 
-#include "type.h"
+#include "misc/type.h"
 
 typedef void (*fn)(void *);
 typedef struct {
   fn func;
   void *data;
-} defer_task;
+} DeferTask;
 
 typedef struct {
-  defer_task *tasks;
+  DeferTask *tasks;
   i32 cap;
   i32 size;
-} defer_holder;
+} DeferTable;
 
 // push task i32o table if there's a slot
-void push_task(defer_holder *dh, fn func, void *data);
+void PushDeferTable(DeferTable *dh, fn func, void *data);
 // remove task in the last slot( basicaly just size-=1)
-void pop_task(defer_holder *dh);
+void PopDeferTable(DeferTable *dh);
 /* this func will run all task in order LIFO(Last In First Out) this func mush
  called in the end of scope*/
-void exec_defer(defer_holder *dh);
+void ExecDeferTable(DeferTable *dh);
 #endif

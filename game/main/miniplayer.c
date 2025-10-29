@@ -3,13 +3,13 @@
 #include <miniaudio.h>
 
 #include "defer.h"
-#include "type.h"
+#include "misc/type.h"
 // defer wrapper
 void defer_ma_engine_uninit(void *data) { ma_engine_uninit(data); }
 // defer wrapper
 i32 main() {
-  defer_task _task[10];
-  defer_holder table = {.tasks = _task, .size = 0, .cap = 10};
+  DeferTask _task[10];
+  DeferTable table = {.tasks = _task, .size = 0, .cap = 10};
   ma_result result;
   ma_engine engine;
   result = ma_engine_init(NULL, &engine);
@@ -17,7 +17,7 @@ i32 main() {
     printf("failed to init ma_engine");
     goto cleanup;
   }
-  push_task(&table, defer_ma_engine_uninit, &engine);
+  PushDeferTable(&table, defer_ma_engine_uninit, &engine);
 
   printf("playing sound\n");
   result =
@@ -26,9 +26,9 @@ i32 main() {
     printf("can't play sound\n");
   }
   getchar();
-  exec_defer(&table);
+  ExecDeferTable(&table);
   return 0;
 cleanup:
-  exec_defer(&table);
+  ExecDeferTable(&table);
   return -1;
 }

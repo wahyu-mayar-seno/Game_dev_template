@@ -3,7 +3,7 @@
 
 #include "defer.h"
 
-void push_task(defer_holder *dh, fn func, void *data) {
+void PushDeferTable(DeferTable *dh, fn func, void *data) {
   if (dh == NULL) {
     fprintf(stderr, "error dh pointer invalid\n");
     exit(-1);
@@ -18,7 +18,7 @@ void push_task(defer_holder *dh, fn func, void *data) {
   dh->tasks[dh->size].data = data;
   dh->size += 1;
 }
-void pop_task(defer_holder *dh) {
+void PopDeferTable(DeferTable *dh) {
   if (!dh) {
     fprintf(stderr, "Error dh is invalid!!!!!!\n");
     return;
@@ -29,7 +29,7 @@ void pop_task(defer_holder *dh) {
   }
   dh->size--;
 }
-void exec_defer(defer_holder *dh) {
+void ExecDeferTable(DeferTable *dh) {
   printf("[INFO] : defer is Executing\n");
   if (dh->size < 1) {
     printf("no task to execute\n");

@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-#include "type.h"
+#include "misc/type.h"
 
 typedef struct {
   GLuint programId;

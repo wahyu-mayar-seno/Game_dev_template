@@ -6,7 +6,7 @@
 #include "gllayer/shader.h"
 
 #include "file.h"
-#include "type.h"
+#include "misc/type.h"
 
 i32 LoadShaderFromFile(Shader *shader, const char *vertPath,
                        const char *fragPath) {

@@ -1,7 +1,7 @@
 #ifndef MATH_LINEAR_ALGEBRA_H
 #define MATH_LINEAR_ALGEBRA_H
 
-#include "type.h"
+#include "misc/type.h"
 
 typedef struct {
   f32 m[16];
