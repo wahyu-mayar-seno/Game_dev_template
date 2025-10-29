@@ -28,7 +28,7 @@ __Code Element__ | __Convention__ | __Example__
 ### 📏 Notes
 
 1. **PascalCase** is used for *types*, *interfaces*, and *public functions*.  
-2. **camelCase** is used for *variables* and *members*.  
+2. **camelCase** is used for *variables(Global,Local)* and *members*.  
 3. **Macro names**,**Preprocesor**, and **enum members** are always **ALL_CAPS**.  
 4. **Float literals** always use `f` suffix (`10.0f`) for clarity and type safety.  
 5. **Symmetry rule**: any alloc/init/load/open function must have its cleanup pair.
