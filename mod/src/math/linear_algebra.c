@@ -26,3 +26,25 @@ void mat4_ortho(f32 out[16], f32 left, f32 right, f32 bottom, f32 top,
   out[14] = -(farZ + nearZ) / fn;
   out[15] = 1.0f;
 }
+
+v2 Lerpv2(v2 a, v2 b, f32 t) {
+  return (v2){
+      .x = a.x + (b.x - a.x) * t, //
+      .y = a.y + (b.y - a.y) * t, //
+  };
+}
+v3 Lerpv3(v3 a, v3 b, f32 t) {
+  return (v3){
+      .x = a.x + (b.x - a.x) * t, //
+      .y = a.y + (b.y - a.y) * t, //
+      .z = a.z + (b.z - a.z) * t, //
+  };
+}
+v4 Lerpv4(v4 a, v4 b, f32 t) {
+  return (v4){
+      .x = a.x + (b.x - a.x) * t, //
+      .y = a.y + (b.y - a.y) * t, //
+      .z = a.z + (b.z - a.z) * t, //
+      .w = a.w + (b.w - a.w) * t, //
+  };
+}
